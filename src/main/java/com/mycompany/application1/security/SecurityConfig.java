@@ -1,4 +1,4 @@
-package com.mycompany.application2.security;
+package com.mycompany.application1.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -13,20 +13,18 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    public static final String platformAdmin = "platformAdmin";
-    public static final String platformEmployee = "platformEmployee";
-    public static final String tenentAdmin = "tenentAdmin";
-    public static final String tenentEmployee = "tenentEmployee";
+    public static final String ADMIN = "admin";
+    public static final String RECRUITER = "recruiter";
+    public static final String INTERVIEWER = "interviewers";
     private final JwtAuthConverter jwtAuthConverter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(cors -> cors.configure(http));
         http.authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers("/platformAdmin/**").hasAuthority(platformAdmin)
-                .requestMatchers("/tenentAdmin/**").hasAuthority(tenentAdmin)
-                .requestMatchers("/tenentEmployee/**").hasAuthority(tenentEmployee)
-                .requestMatchers("/platformEmployee/**").hasAuthority(platformEmployee)
+                .requestMatchers("/admin/**").hasAuthority(ADMIN)
+                .requestMatchers("/recruiter/**").hasAuthority(RECRUITER)
+                .requestMatchers("/interviewers/**").hasAuthority(INTERVIEWER)
                 .anyRequest().authenticated()
         );
 //        http.csrf(csrf -> csrf.ignoringRequestMatchers("/applicant-service/api/update-draft/{id}"));
@@ -43,4 +41,6 @@ public class SecurityConfig {
 
     }
 
+    
+    
 }
